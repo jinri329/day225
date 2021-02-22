@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 映射文件 -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 和绑定的接口全类名对应 -->
+<mapper namespace="com.zyy.dao.ItemDao">
+    <select id="findTbItemById" parameterType="Long" resultType="com.zyy.bean.TbItem">
+        SELECT * FROM tbitem WHERE id=#{id}
+    </select>
+    <select id="findTbItemByPage" resultType="com.zyy.bean.TbItem">
+        SELECT * FROM tbitem LIMIT #{index},#{limit}
+    </select>
+    <select id="findTbItemByCount" resultType="int">
+        SELECT COUNT(*) FROM tbitem
+    </select>
+</mapper>
