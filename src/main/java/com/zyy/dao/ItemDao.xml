@@ -5,6 +5,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 和绑定的接口全类名对应 -->
 <mapper namespace="com.zyy.dao.ItemDao">
+
     <select id="findTbItemById" parameterType="Long" resultType="com.zyy.bean.TbItem">
         SELECT * FROM tbitem WHERE id=#{id}
     </select>
@@ -14,4 +15,38 @@
     <select id="findTbItemByCount" resultType="int">
         SELECT COUNT(*) FROM tbitem
     </select>
+
+    <delete id="delTbItemByIds">
+        UPDATE tbitem SET status = #{status}
+        <where>
+            <if test="ids!=null">
+                <foreach collection="ids" separator="," open="id in(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+    <delete id="setTbItemByIds">
+        UPDATE tbitem SET status = #{status}
+        <where>
+            <if test="ids!=null">
+                <foreach collection="ids" separator="," open="id in(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+    <update id="upTbItemByIds">
+        UPDATE tbitem SET status = #{status}
+        <where>
+            <if test="ids!=null">
+                <foreach collection="ids" separator="," open="id in(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </update>
+
 </mapper>

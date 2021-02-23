@@ -5,6 +5,7 @@ import com.zyy.vo.LayuiTableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -20,6 +21,26 @@ public class TbItemController {
         //就要将json格式的数据返回到页面去
         //ResponseBody 注解会自动将对象转换为json格式输出到页面
         LayuiTableResult result = itemService.findTbItemByPage(page,limit);
+        return result;
+    }
+
+    @RequestMapping("/itemDel")
+    @ResponseBody
+    public LayuiTableResult itemDel(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "15")Integer limit,@RequestParam(value = "ids[]") Long[] ids,Integer op){
+        LayuiTableResult result = itemService.delTbItemByIds(page,limit,ids,op);
+        return result;
+    }
+    @RequestMapping("/itemDown")
+    @ResponseBody
+    public LayuiTableResult itemDown(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "15")Integer limit,@RequestParam(value = "ids[]") Long[] ids,Integer op){
+        System.out.println();
+        LayuiTableResult result = itemService.setTbItemByIds(page,limit,ids,op);
+        return result;
+    }
+    @RequestMapping("/itemUp")
+    @ResponseBody
+    public LayuiTableResult itemUp(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "15")Integer limit,@RequestParam(value = "ids[]") Long[] ids,Integer op){
+        LayuiTableResult result = itemService.upTbItemByIds(page,limit,ids,op);
         return result;
     }
 }

@@ -26,4 +26,10 @@ public interface ItemDao {
      * @return 查询总记录条数
      */
     Integer findTbItemByCount();
+
+    int delTbItemByIds(@Param("ids") Long[] ids, @Param("status") Integer op);
+
+    int setTbItemByIds(@Param("ids") Long[] ids,@Param("status") Integer op);
+
+    int upTbItemByIds(@Param("ids")Long[] ids,@Param("status") Integer op);
 }
