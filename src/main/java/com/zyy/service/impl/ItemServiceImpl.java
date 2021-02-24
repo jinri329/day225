@@ -25,16 +25,11 @@ public class ItemServiceImpl implements ItemService {
     public LayuiTableResult findTbItemByPage(Integer page, Integer limit) {
         List<TbItem> data = itemDao.findTbItemByPage((page-1)*limit,limit);
         Integer count = itemDao.findTbItemByCount();
-        LayuiTableResult result = new LayuiTableResult();
-        result.setCode(0);
-        result.setMsg("");
-        result.setCount(count);
         for (TbItem tbItem:data) {
             //将每一个数据里面的价格 都处理为保存两位小数存入数据库 所以页面的真正价格为barcode
             tbItem.setBarcode(TransformPrice.trPrice(tbItem.getPrice()));
         }
-        result.setData(data);
-        return result;
+        return LayuiTableResult.builder(count,data);
     }
 
     @Override
@@ -44,47 +39,41 @@ public class ItemServiceImpl implements ItemService {
          */
         int i = itemDao.delTbItemByIds(ids,op);
         Integer count = itemDao.findTbItemByCount();
-        LayuiTableResult result = new LayuiTableResult();
-        result.setCode(0);
-        result.setMsg("");
-        result.setCount(count);
         List<TbItem> data = itemDao.findTbItemByPage((page-1)*limit,limit);
-        result.setData(data);
         if (i<=0){
             return null;
         }
-        return result;
+        return LayuiTableResult.builder(count,data);
     }
 
     @Override
     public LayuiTableResult setTbItemByIds(Integer page, Integer limit, Long[] ids, Integer op) {
         int i = itemDao.setTbItemByIds(ids,op);
         Integer count = itemDao.findTbItemByCount();
-        LayuiTableResult result = new LayuiTableResult();
-        result.setCode(0);
-        result.setMsg("");
-        result.setCount(count);
         List<TbItem> data = itemDao.findTbItemByPage((page-1)*limit,limit);
-        result.setData(data);
         if (i<=0){
             return null;
         }
-        return result;
+        return LayuiTableResult.builder(count,data);
     }
 
     @Override
     public LayuiTableResult upTbItemByIds(Integer page, Integer limit, Long[] ids, Integer op) {
         int i = itemDao.upTbItemByIds(ids,op);
         Integer count = itemDao.findTbItemByCount();
-        LayuiTableResult result = new LayuiTableResult();
-        result.setCode(0);
-        result.setMsg("");
-        result.setCount(count);
         List<TbItem> data = itemDao.findTbItemByPage((page-1)*limit,limit);
-        result.setData(data);
+
         if (i<=0){
             return null;
         }
-        return result;
+        return LayuiTableResult.builder(count,data);
+    }
+
+    @Override
+    public LayuiTableResult searchItem(Integer page, Integer limit, String title, Long price_max, Long price_min, Integer num, Integer status) {
+        List<TbItem> data = itemDao.searchItem((page-1)*limit,limit,title,price_max,price_min,num,status);
+        Integer count = itemDao.searchItemByCount(title,price_max,price_min,num,status);
+        System.out.println(data);
+        return LayuiTableResult.builder(count,data);
     }
 }

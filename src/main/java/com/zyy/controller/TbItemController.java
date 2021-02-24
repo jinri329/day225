@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
 @Controller
 @RequestMapping("/item")
 public class TbItemController {
@@ -41,6 +44,23 @@ public class TbItemController {
     @ResponseBody
     public LayuiTableResult itemUp(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "15")Integer limit,@RequestParam(value = "ids[]") Long[] ids,Integer op){
         LayuiTableResult result = itemService.upTbItemByIds(page,limit,ids,op);
+        return result;
+    }
+
+    @RequestMapping("/search")
+    @ResponseBody
+    public LayuiTableResult itemSearch(@RequestParam(defaultValue = "1") Integer page,Integer limit,String title,@RequestParam(defaultValue = "0") Long price_min,@RequestParam(defaultValue = "1000000000")Long price_max,Integer num,Integer status){
+        //这里要确保数据是能接收到，才继续往下
+        //System.out.println();
+        //解决乱码
+        LayuiTableResult result = null;
+        try {
+            byte[] b =title.getBytes("iso-8859-1");
+            String newTitle = new String(b,"UTF-8");
+            result =itemService.searchItem(page,limit,newTitle,price_max,price_min,num,status);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 }

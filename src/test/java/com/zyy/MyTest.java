@@ -1,8 +1,15 @@
 package com.zyy;
 
+import com.zyy.service.ItemService;
+import com.zyy.vo.LayuiTableResult;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class MyTest {
+    @Autowired
+    private ItemService itemService;
+
     @Test
     public void  demo1(){
         /**
@@ -17,5 +24,10 @@ public class MyTest {
         int i1 = price/100;
         int i2 = price%100;
         System.out.println(i1+"."+(i2<10?"0"+i2:i2));
+    }
+
+    @Test
+    public void demo2(){
+        LayuiTableResult count = itemService.searchItem(1,15,"手机",10000L,1000000L,null,1);
     }
 }

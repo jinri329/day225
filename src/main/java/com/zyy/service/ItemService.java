@@ -49,4 +49,16 @@ public interface ItemService {
      * @return 根据id上架商品 并且返回要展示的商品数据
      */
     LayuiTableResult upTbItemByIds(Integer page, Integer limit, Long[] ids, Integer op);
+
+    /**
+     *
+     * @param page
+     * @param limit
+     * @param price_max
+     * @param price_min
+     * @param num
+     * @param status
+     * @return 多条件查询商品
+     */
+    LayuiTableResult searchItem(Integer page, Integer limit, String title,Long price_max, Long price_min, Integer num, Integer status);
 }

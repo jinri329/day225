@@ -11,6 +11,20 @@ public class LayuiTableResult implements Serializable{
     private Integer count;
     private List<TbItem> data;
 
+    public LayuiTableResult() {
+
+    }
+
+    public LayuiTableResult(Integer count, List<TbItem> data) {
+        this.code = 0;
+        this.msg = "";
+        this.count = count;
+        this.data = data;
+    }
+    //工具方法
+    public static LayuiTableResult builder(Integer count,List<TbItem> data){
+        return new LayuiTableResult(count,data);
+    }
     public Integer getCode() {
         return code;
     }
@@ -52,4 +66,5 @@ public class LayuiTableResult implements Serializable{
                 ", data=" + data +
                 '}';
     }
+
 }

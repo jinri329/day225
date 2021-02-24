@@ -1,8 +1,9 @@
 $(function () {
-    layui.use('table', function(){
+    layui.use(['table','form'], function(){
         //只能在这个function的花括号里面 才能访问这个table
-        var table = layui.table;
-
+        var table = layui.table,
+            form = layui.form;
+        form.render();
         table.render({
             elem: '#test'
             ,url:'/item/showItemPage'
@@ -24,9 +25,10 @@ $(function () {
                 ,{field:'status', title:'商品状态', width:120, sort: true,templet:"#itemStatus"}
                 ,{field:'created', title:'创建时间', width:180, sort: true,templet:'<div>{{ layui.util.toDateString(d.created, "yyyy-MM-dd HH:mm:ss") }}</div>'}
                 ,{field:'updated', title:'更新时间', width:180, sort: true,templet:'<div>{{ layui.util.toDateString(d.created, "yyyy-MM-dd HH:mm:ss") }}</div>'}
-            ]]
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                ]]
             ,page: true
-            ,limit: 20
+            ,limit:15
         });
 
         //头工具栏事件
@@ -65,6 +67,8 @@ $(function () {
                     layer.alert('这是工具栏右侧自定义的一个图标按钮');
                     break;
             };
+
+
         });
 
         //监听行工具事件
@@ -88,5 +92,24 @@ $(function () {
                 });
             }
         });
+        $("#btn_search").click(function () {
+            var t =$("#title").val();
+            var p_min =$("#price_min").val();
+            var p_max =$("#price_max").val();
+            var n =$("#num").val();
+            var s =$("#status").val();
+            console.log(t,p_min,p_max,n,s);
+            table.reload('test', {
+                url:"/item/search"
+                ,where: {
+                    title:t
+                    ,price_min:p_min*100
+                    ,price_max:p_max*100
+                    ,num:n
+                    ,status:s
+                }
+            });
+        })
     });
+
 })

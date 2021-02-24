@@ -15,7 +15,6 @@
     <select id="findTbItemByCount" resultType="int">
         SELECT COUNT(*) FROM tbitem
     </select>
-
     <delete id="delTbItemByIds">
         UPDATE tbitem SET status = #{status}
         <where>
@@ -49,4 +48,46 @@
         </where>
     </update>
 
+    <select id="searchItem" resultType="com.zyy.bean.TbItem">
+        SELECT * FROM tbitem
+        <where>
+            <if test="title!=null">
+                AND title LIKE "%${title}%"
+            </if>
+            <if test="price_min!=null">
+                AND price &gt; #{price_min}
+            </if>
+            <if test="price_max!=null">
+                AND price &lt; #{price_max}
+            </if>
+            <if test="num!=null">
+                AND num = #{num}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+
+        </where>
+        limit #{index},#{limit}
+    </select>
+    <select id="searchItemByCount" resultType="int">
+        SELECT COUNT(*) FROM tbitem
+        <where>
+            <if test="title!=null">
+                AND title LIKE "%${title}%"
+            </if>
+            <if test="price_min!=null">
+                AND price &gt; #{price_min}
+            </if>
+            <if test="price_max!=null">
+                AND price &lt; #{price_max}
+            </if>
+            <if test="num!=null">
+                AND num = #{num}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>
