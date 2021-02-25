@@ -54,16 +54,16 @@
             <if test="title!=null">
                 AND title LIKE "%${title}%"
             </if>
-            <if test="price_min!=null">
+            <if test="price_min!=0">
                 AND price &gt; #{price_min}
             </if>
-            <if test="price_max!=null">
+            <if test="price_max!=0">
                 AND price &lt; #{price_max}
             </if>
             <if test="num!=null">
                 AND num = #{num}
             </if>
-            <if test="status!=null">
+            <if test="status!=0">
                 AND status = #{status}
             </if>
 
@@ -76,18 +76,24 @@
             <if test="title!=null">
                 AND title LIKE "%${title}%"
             </if>
-            <if test="price_min!=null">
+            <if test="price_min!=0">
                 AND price &gt; #{price_min}
             </if>
-            <if test="price_max!=null">
+            <if test="price_max!=0">
                 AND price &lt; #{price_max}
             </if>
             <if test="num!=null">
                 AND num = #{num}
             </if>
-            <if test="status!=null">
+            <if test="status!=0">
                 AND status = #{status}
             </if>
         </where>
     </select>
+
+    <!-- 添加商品信息-->
+    <insert id="addItem" parameterType="com.zyy.bean.TbItem">
+        INSERT INTO tbitem(id, title, sellPoint, price, num, barcode, image, cId, created, updated)
+        VALUE (#{id},#{title},#{sellPoint},#{price},#{num},#{barcode},#{image},#{cId},#{created},#{updated})
+    </insert>
 </mapper>

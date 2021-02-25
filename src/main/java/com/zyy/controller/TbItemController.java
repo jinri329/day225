@@ -1,12 +1,15 @@
 package com.zyy.controller;
 
+import com.zyy.bean.TbItem;
 import com.zyy.service.ItemService;
 import com.zyy.vo.LayuiTableResult;
+import com.zyy.vo.TaotaoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -27,12 +30,14 @@ public class TbItemController {
         return result;
     }
 
+    //删除商品
     @RequestMapping("/itemDel")
     @ResponseBody
     public LayuiTableResult itemDel(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "15")Integer limit,@RequestParam(value = "ids[]") Long[] ids,Integer op){
         LayuiTableResult result = itemService.delTbItemByIds(page,limit,ids,op);
         return result;
     }
+    //下架
     @RequestMapping("/itemDown")
     @ResponseBody
     public LayuiTableResult itemDown(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "15")Integer limit,@RequestParam(value = "ids[]") Long[] ids,Integer op){
@@ -40,6 +45,7 @@ public class TbItemController {
         LayuiTableResult result = itemService.setTbItemByIds(page,limit,ids,op);
         return result;
     }
+    //上架
     @RequestMapping("/itemUp")
     @ResponseBody
     public LayuiTableResult itemUp(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "15")Integer limit,@RequestParam(value = "ids[]") Long[] ids,Integer op){
@@ -47,6 +53,7 @@ public class TbItemController {
         return result;
     }
 
+    //多条件搜索
     @RequestMapping("/search")
     @ResponseBody
     public LayuiTableResult itemSearch(@RequestParam(defaultValue = "1") Integer page,Integer limit,String title,@RequestParam(defaultValue = "0") Long price_min,@RequestParam(defaultValue = "1000000000")Long price_max,Integer num,Integer status){
@@ -61,6 +68,21 @@ public class TbItemController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    //图片上传
+    @RequestMapping("/upload")
+    @ResponseBody
+    public TaotaoResult uploadImg(MultipartFile file){
+        TaotaoResult result = itemService.addImg(file);
+        return result;
+    }
+
+    @RequestMapping("/addItem")
+    @ResponseBody
+    public TaotaoResult addItem(TbItem tbItem){
+        TaotaoResult result = itemService.addItem(tbItem);
         return result;
     }
 }

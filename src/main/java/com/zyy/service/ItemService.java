@@ -2,6 +2,8 @@ package com.zyy.service;
 
 import com.zyy.bean.TbItem;
 import com.zyy.vo.LayuiTableResult;
+import com.zyy.vo.TaotaoResult;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ItemService {
     /**
@@ -61,4 +63,18 @@ public interface ItemService {
      * @return 多条件查询商品
      */
     LayuiTableResult searchItem(Integer page, Integer limit, String title,Long price_max, Long price_min, Integer num, Integer status);
+
+    /**
+     *
+     * @param file
+     * @return 图片上传 返回json格式
+     */
+    TaotaoResult addImg(MultipartFile file);
+
+    /**
+     *
+     * @param tbItem
+     * @return 添加商品
+     */
+    TaotaoResult addItem(TbItem tbItem);
 }

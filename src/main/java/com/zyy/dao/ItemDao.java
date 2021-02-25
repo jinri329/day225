@@ -48,4 +48,6 @@ public interface ItemDao {
     List<TbItem> searchItem(@Param("index")int index, @Param("limit") Integer limit, @Param("title") String title,@Param("price_max") Long price_max,@Param("price_min") Long price_min,@Param("num") Integer num,@Param("status") Integer status);
 
     Integer searchItemByCount(@Param("title")String title, @Param("price_max")Long price_max, @Param("price_min")Long price_min, @Param("num")Integer num, @Param("status")Integer status);
+
+    int addItem(TbItem tbItem);
 }
